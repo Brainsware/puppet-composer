@@ -92,4 +92,34 @@ describe 'composer', :type => :class do
 
     it { should_not contain_exec('composer-update') }
   end
+
+  describe 'with provider set to package' do
+    let(:params) {{ :provider => 'package' }}
+
+    it { should_not contain_wget__fetch('composer-install') }
+    it { should contain_package('composer-install') \
+         .with_name('php-composer') \
+         .with_ensure('present')
+    }
+  end
+
+  describe 'with provider package, and auto_update' do
+    let(:params) {{ :provider => 'package', :auto_update => true }}
+
+    it { should_not contain_wget__fetch('composer-install') }
+    it { should contain_package('composer-install') \
+         .with_name('php-composer') \
+         .with_ensure('latest')
+    }
+  end
+
+  describe 'with provider package, and custom package name' do
+    let(:params) {{ :provider => 'package', :package => 'php5-composer' }}
+
+    it { should_not contain_wget__fetch('composer-install') }
+    it { should contain_package('composer-install') \
+         .with_name('php5-composer') \
+         .with_ensure('present')
+    }
+  end
 end

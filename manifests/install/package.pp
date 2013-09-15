@@ -25,7 +25,8 @@ class composer::install::package (
     default => 'present',
   }
 
-  package { $package:
+  package { 'composer-install':
     ensure => $ensure,
+    name   => $package,
   }
 }
