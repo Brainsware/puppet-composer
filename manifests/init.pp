@@ -16,17 +16,23 @@
 #
 # == Parameters:
 #
+# [*provider*]
+#   Can be set to package, if so, please provide a *package* name.
+#
 # [*target_dir*]
 #   Where to install the composer executable.
 #
 # [*command_name*]
 #   The name of the composer executable.
 #
+# [*package*]
+#   The name of the composer package.
+#
 # [*user*]
 #   The owner of the composer executable.
 #
 # [*auto_update*]
-#   Whether to run `composer self-update`.
+#   Whether to run `composer self-update`. In the case of package whether to `ensure => latest`.
 #
 # == Example:
 #
@@ -40,51 +46,21 @@
 #   }
 #
 class composer (
-  $provider     = undef,
-  $target_dir   = undef,
-  $command_name = undef,
-  $user         = undef,
-  $auto_update  = false
-) {
+  $provider     = $composer::params::provider,
+  $target_dir   = $composer::params::target_dir,
+  $command_name = $composer::params::command_name,
+  $package      = $composer::params::package,
+  $user         = $composer::params::user,
+  $auto_update  = $composer::params::auto_update
+) inherits composer::params {
 
-  include composer::params
+  validate_re($provider, '^(wget|package)$', 'Please make sure to set $provider one of "wget" or "package".')
 
-  $composer_target_dir = $target_dir ? {
-    undef => $::composer::params::target_dir,
-    default => $target_dir
-  }
-
-  $composer_command_name = $command_name ? {
-    undef => $::composer::params::command_name,
-    default => $command_name
-  }
-
-  $composer_user = $user ? {
-    undef => $::composer::params::user,
-    default => $user
-  }
-
-  wget::fetch { 'composer-install':
-    source      => $::composer::params::phar_location,
-    destination => "${composer_target_dir}/${composer_command_name}",
-    execuser    => $composer_user,
-  }
-
-  exec { 'composer-fix-permissions':
-    command => "chmod a+x ${composer_command_name}",
-    path    => '/usr/bin:/bin:/usr/sbin:/sbin',
-    cwd     => $composer_target_dir,
-    user    => $composer_user,
-    unless  => "test -x ${composer_target_dir}/${composer_command_name}",
-    require => Wget::Fetch['composer-install'],
-  }
-
-  if $auto_update {
-    exec { 'composer-update':
-      command => "${composer_command_name} self-update",
-      path    => "/usr/bin:/bin:/usr/sbin:/sbin:${composer_target_dir}",
-      user    => $composer_user,
-      require => Exec['composer-fix-permissions'],
-    }
+  class { "composer::install::${provider}":
+    target_dir   => $target_dir,
+    command_name => $command_name,
+    package      => $package,
+    user         => $user,
+    auto_update  => $auto_update,
   }
 }

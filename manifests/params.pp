@@ -27,8 +27,11 @@
 # It may be imported or inherited by other classes.
 #
 class composer::params {
+  $provider      = 'wget'
   $phar_location = 'http://getcomposer.org/composer.phar'
   $target_dir    = '/usr/local/bin'
   $command_name  = 'composer'
   $user          = 'root'
+  $auto_update   = false
+  $package       = 'php-composer'
 }

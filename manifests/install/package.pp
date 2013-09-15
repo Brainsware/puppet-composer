@@ -12,15 +12,20 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 
-name    'brainsware-composer'
-version '0.2.0'
-source 'https://github.com/Brainsware.org/puppet-composer'
-author 'brainsware'
-license 'Apache License, Version 2.0'
-summary 'manage PHP composer installation as well as installation and update of projects using composer'
-description 'UNKNOWN'
-project_page 'https://github.com/Brainsware.org/puppet-composer'
+class composer::install::package (
+  $target_dir   = $composer::params::target_dir,
+  $command_name = $composer::params::command_name,
+  $package      = $composer::params::package,
+  $user         = $composer::params::user,
+  $auto_update  = $composer::params::auto_update
+) inherits composer::params {
 
-## Add dependencies, if any:
-dependency 'puppetlabs/stdlib', '>= 4.1.0'
-dependency 'maestrodev/wget', '>= 1.2.2'
+  $ensure = $auto_update? {
+    true    => 'latest',
+    default => 'present',
+  }
+
+  package { $package:
+    ensure => $ensure,
+  }
+}
