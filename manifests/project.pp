@@ -19,7 +19,7 @@
 # == Parameters:
 #
 # [*ensure*]
-#   Can be either 'present' or 'latest. Default: present
+#   Can be either 'present' or 'latest'. 'installed' is a synonym for 'present'. Default: present
 #
 # [*target*]
 #   Where to install this composer project. Must exist! Defaults to $title
@@ -51,7 +51,7 @@ define composer::project (
 ) {
   include composer
 
-  validate_re($ensure, '^(present|latest)$', '$ensure must be one of present or latest.')
+  validate_re($ensure, '^(present|installed|latest)$', '$ensure must be one of present or latest.')
   validate_re($prefer, '^(dist|source)$', '$prefer can only be one of source or dist. See `composer install --help`.')
   validate_bool($dev, $scripts, $custom_inst)
 
