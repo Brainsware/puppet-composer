@@ -1,5 +1,7 @@
 # Puppet Module for PHP composer
 
+[![Build Status](https://travis-ci.org/Brainsware/puppet-composer.png?branch=master)](https://travis-ci.org/Brainsware/puppet-composer)
+
 manage installation of composer as well as the installation and update of projects with composer.
 
 This project was initially forked from [willdurand-composer](https://github.com/willdurand/puppet-composer), adding basic functionality already provided from [tPl0ch-composer](https://github.com/tPl0ch/puppet-composer), albeit in a rather awkward manner. Because everyone is a unique snowflake and *we* needed one true (i.e.: our) way of handling composer.
