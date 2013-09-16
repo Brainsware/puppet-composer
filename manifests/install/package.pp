@@ -12,6 +12,14 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 
+# = Class: composer::install::package
+#
+#  This class helps install composer from a package
+#
+# == Parameters:
+#
+#  The parameters in this class are exactly the same as the ones of composer
+#
 class composer::install::package (
   $target_dir   = $composer::params::target_dir,
   $command_name = $composer::params::command_name,
