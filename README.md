@@ -63,6 +63,23 @@ To keep a project up-to-date we can use the `ensure => latest`
      }
 ```
 
+## Patches and Testing
+
+Contributions are highly welcomed, more so are those which contribute patches with tests. Or just more tests! We have [rspec-puppet](http://rspec-puppet.com/) and [rspec-system](https://github.com/puppetlabs/rspec-system-serverspec) tests. When [contributing patches](Github WorkFlow), please make sure that your patches pass tests:
+
+```
+  igalic@levix ~/src/bw/puppet-composer (git)-[master] % rake spec
+  ....................................
+
+  Finished in 2.29 seconds
+  36 examples, 0 failures
+  igalic@levix ~/src/bw/puppet-composer (git)-[master] % rake spec:system
+
+  ...loads of output...
+  2 examples, 0 failures
+  igalic@levix ~/src/bw/puppet-composer (git)-[master] %
+```
+
 ## Release process
 
 The version in Modulefile should be bumped according to [semver](http://semver.org/) *during development*, i.e.: The first commit after the release should already bump the version, as master at this point differs from the latest release.
