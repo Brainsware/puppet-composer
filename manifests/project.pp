@@ -76,23 +76,26 @@ define composer::project (
   }
 
   $install_opts = join(flatten([$dev_opt, $script_opt, $custom_inst_opt, "--prefer-${prefer}" ]), ' ')
-  $update_opts = join(flatten([$dev_opt, $script_opt, $custom_inst_opt, "--prefer-${prefer}", $lock_opt ]), ' ')
+  $update_opts  = join(flatten([$dev_opt, $script_opt, $custom_inst_opt, "--prefer-${prefer}", $lock_opt ]), ' ')
 
+
+  Exec {
+    cwd         => $target,
+    path        => $::path,
+    provider    => 'posix',
+    environment => 'HOME=/root',
+    require     => Class['composer'],
+  }
 
   exec { "composer_install_${title}":
-    command => "${composer} install ${base_opts} ${install_opts}",
-    onlyif  => "${composer} install ${install_opts} --dry-run | grep -- '- Installing '",
-    cwd     => $target,
-    require => Class['composer'],
+    command     => "${composer} install ${base_opts} ${install_opts}",
+    onlyif      => "${composer} install ${install_opts} --dry-run | grep -- '- Installing '",
   }
 
   if $ensure == latest {
     exec { "composer_update_${title}":
-      command => "${composer} update ${base_opts} ${update_opts}",
-      onlyif  => "${composer} update ${update_opts} --dry-run | grep -- '- Installing '",
-      cwd     => $target,
-      path    => $::path,
-      require => Class['composer'],
+      command     => "${composer} update ${base_opts} ${update_opts}",
+      onlyif      => "${composer} update ${update_opts} --dry-run | grep -- '- Installing '",
     }
   }
 }
