@@ -13,7 +13,7 @@
 #   limitations under the License.
 
 name    'brainsware-composer'
-version '0.2.1'
+version '0.2.2'
 source 'https://github.com/Brainsware.org/puppet-composer'
 author 'brainsware'
 license 'Apache License, Version 2.0'
