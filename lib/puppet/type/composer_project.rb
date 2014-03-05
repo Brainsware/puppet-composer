@@ -13,7 +13,7 @@
 #   limitations under the License.
 
 Puppet::Type.newtype(:composer_project) do
-  @doc = 'Innstall a project with composer and keep it up-todate'
+  @doc = 'Install a project with composer and keep it up to date'
 
   # # not sure if this is actually
   #
@@ -25,42 +25,53 @@ Puppet::Type.newtype(:composer_project) do
   newparam(:name, :namevar => true) do
   end
 
-
   newproperty(:target) do
     desc 'target directory'
+    
     defaultto resource[:name]
   end
 
   newproperty(:dev) do
     desc 'whether to install development packages'
+    
     defaultto false
+    
     # n.b.: This will need munging
   end
 
   newproperty(:scripts) do
     desc 'whether to execute scripts from the installed packages'
+    
     defaultto true
+    
     # n.b.: This will need munging
   end
 
   newproperty(:scripts) do
     desc 'whether to execute custom installers from the installed packages'
+    
     defaultto true
+    
     # n.b.: This will need munging
   end
 
   newproperty(:lock) do
     desc 'Only updates the lock file hash to suppress warning about the lock file being out of date'
+    
     defaultto true
+    
+    # this option only works when ensure => :latest
+    # if resource[:ensure] != :latest
+    #  fail!
+    
     # n.b.: This will need munging
-    # also, this option only works when ensure => latest
   end
 
   newproperty(:prefer) do
     desc 'Which source to install packages from (source or dist)'
+    
     defaultto :dist
+    
     # n.b.: This will need munging (strings => symbols)
   end
-
-
 end
