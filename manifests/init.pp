@@ -63,4 +63,6 @@ class composer (
     user         => $user,
     auto_update  => $auto_update,
   }
+
+  contain "composer::install::${provider}"
 }
