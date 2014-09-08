@@ -12,15 +12,24 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 
-name    'brainsware-composer'
-version '0.2.2'
-source 'https://github.com/Brainsware/puppet-composer'
-author 'brainsware'
-license 'Apache License, Version 2.0'
-summary 'manage PHP composer installation as well as installation and update of projects using composer'
-description 'UNKNOWN'
-project_page 'https://github.com/Brainsware/puppet-composer'
+require 'spec_helper_acceptance'
 
-## Add dependencies, if any:
-dependency 'puppetlabs/stdlib', '>= 4.1.0'
-dependency 'maestrodev/wget', '>= 1.2.2'
+describe 'composer class' do
+
+  context 'default parameters' do
+    # Using puppet_apply as a helper
+    it 'should work idempotently with no errors' do
+      pp = <<-EOS
+      class { 'composer': }
+      EOS
+
+      # Run it twice and test for idempotency
+      apply_manifest(pp, :catch_failures => true)
+      apply_manifest(pp, :catch_changes  => true)
+    end
+
+    describe file('/usr/local/bin/composer') do
+      it { should contain 'composer.phar' }
+    end
+  end
+end
