@@ -29,7 +29,7 @@ describe 'composer class' do
     end
 
     describe file('/usr/local/bin/composer') do
-      it { should contain 'composer.phar' }
+      it { is_expected.to contain 'composer.phar' }
     end
   end
 end

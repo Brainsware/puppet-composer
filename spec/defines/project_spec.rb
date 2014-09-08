@@ -18,9 +18,9 @@ describe 'composer::project' do
   let(:title) { 'yolo' }
   let(:params) {{ :target => '/srv/web/yolo' }}
 
-  it { should include_class('composer') }
-  it { should contain_composer__project('yolo').with({ 'ensure' => 'present'} )}
-  it { should contain_exec('composer_install_yolo').with({
+  it { is_expected.to include_class('composer') }
+  it { is_expected.to contain_composer__project('yolo').with({ 'ensure' => 'present'} )}
+  it { is_expected.to contain_exec('composer_install_yolo').with({
     'command' => '/usr/local/bin/composer install --no-interaction --quiet --no-progress --no-dev --prefer-dist',
     'cwd'     => '/srv/web/yolo'
   })}
@@ -29,13 +29,13 @@ describe 'composer::project' do
     let(:title) { 'yolo' }
     let(:params) {{ :target => '/srv/web/yolo', :ensure => 'latest' }}
 
-    it { should include_class('composer') }
-    it { should contain_composer__project('yolo').with({ 'ensure' => 'latest'} )}
-    it { should contain_exec('composer_install_yolo').with({
+    it { is_expected.to include_class('composer') }
+    it { is_expected.to contain_composer__project('yolo').with({ 'ensure' => 'latest'} )}
+    it { is_expected.to contain_exec('composer_install_yolo').with({
       'command' => '/usr/local/bin/composer install --no-interaction --quiet --no-progress --no-dev --prefer-dist',
       'cwd'     => '/srv/web/yolo'
     })}
-    it { should contain_exec('composer_update_yolo').with({
+    it { is_expected.to contain_exec('composer_update_yolo').with({
       'command' => '/usr/local/bin/composer update --no-interaction --quiet --no-progress --no-dev --prefer-dist',
       'cwd'     => '/srv/web/yolo'
     })}
@@ -45,13 +45,13 @@ describe 'composer::project' do
     let(:title) { 'yolo' }
     let(:params) {{ :target => '/srv/web/yolo', :ensure => 'latest', :dev => true }}
 
-    it { should include_class('composer') }
-    it { should contain_composer__project('yolo').with({ 'ensure' => 'latest'} )}
-    it { should contain_exec('composer_install_yolo').with({
+    it { is_expected.to include_class('composer') }
+    it { is_expected.to contain_composer__project('yolo').with({ 'ensure' => 'latest'} )}
+    it { is_expected.to contain_exec('composer_install_yolo').with({
       'command' => '/usr/local/bin/composer install --no-interaction --quiet --no-progress --dev --prefer-dist',
       'cwd'     => '/srv/web/yolo'
     })}
-    it { should contain_exec('composer_update_yolo').with({
+    it { is_expected.to contain_exec('composer_update_yolo').with({
       'command' => '/usr/local/bin/composer update --no-interaction --quiet --no-progress --dev --prefer-dist',
       'cwd'     => '/srv/web/yolo'
     })}
@@ -61,13 +61,13 @@ describe 'composer::project' do
     let(:title) { 'yolo' }
     let(:params) {{ :target => '/srv/web/yolo', :ensure => 'latest', :dev => true, :lock => true }}
 
-    it { should include_class('composer') }
-    it { should contain_composer__project('yolo').with({ 'ensure' => 'latest'} )}
-    it { should contain_exec('composer_install_yolo').with({
+    it { is_expected.to include_class('composer') }
+    it { is_expected.to contain_composer__project('yolo').with({ 'ensure' => 'latest'} )}
+    it { is_expected.to contain_exec('composer_install_yolo').with({
       'command' => '/usr/local/bin/composer install --no-interaction --quiet --no-progress --dev --prefer-dist',
       'cwd'     => '/srv/web/yolo'
     })}
-    it { should contain_exec('composer_update_yolo').with({
+    it { is_expected.to contain_exec('composer_update_yolo').with({
       'command' => '/usr/local/bin/composer update --no-interaction --quiet --no-progress --dev --prefer-dist --lock',
       'cwd'     => '/srv/web/yolo'
     })}
