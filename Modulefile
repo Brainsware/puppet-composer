@@ -1,4 +1,4 @@
-#   Copyright 2013 Brainsware
+#   Copyright 2014 Brainsware
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@ author 'brainsware'
 license 'Apache License, Version 2.0'
 summary 'manage PHP composer installation as well as installation and update of projects using composer'
 description 'UNKNOWN'
-project_page 'https://github.com/Brainsware.org/puppet-composer'
+project_page 'https://github.com/Brainsware/puppet-composer'
 
 ## Add dependencies, if any:
 dependency 'puppetlabs/stdlib', '>= 4.1.0'
