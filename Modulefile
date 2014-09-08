@@ -14,7 +14,7 @@
 
 name    'brainsware-composer'
 version '0.2.2'
-source 'https://github.com/Brainsware.org/puppet-composer'
+source 'https://github.com/Brainsware/puppet-composer'
 author 'brainsware'
 license 'Apache License, Version 2.0'
 summary 'manage PHP composer installation as well as installation and update of projects using composer'
