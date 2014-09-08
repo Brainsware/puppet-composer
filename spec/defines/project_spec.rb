@@ -1,4 +1,4 @@
-#   Copyright 2013 Brainsware
+#   Copyright 2014 Brainsware
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -18,7 +18,6 @@ describe 'composer::project' do
   let(:title) { 'yolo' }
   let(:params) {{ :target => '/srv/web/yolo' }}
 
-  it { is_expected.to include_class('composer') }
   it { is_expected.to contain_composer__project('yolo').with({ 'ensure' => 'present'} )}
   it { is_expected.to contain_exec('composer_install_yolo').with({
     'command' => '/usr/local/bin/composer install --no-interaction --quiet --no-progress --no-dev --prefer-dist',
@@ -29,7 +28,6 @@ describe 'composer::project' do
     let(:title) { 'yolo' }
     let(:params) {{ :target => '/srv/web/yolo', :ensure => 'latest' }}
 
-    it { is_expected.to include_class('composer') }
     it { is_expected.to contain_composer__project('yolo').with({ 'ensure' => 'latest'} )}
     it { is_expected.to contain_exec('composer_install_yolo').with({
       'command' => '/usr/local/bin/composer install --no-interaction --quiet --no-progress --no-dev --prefer-dist',
@@ -45,7 +43,6 @@ describe 'composer::project' do
     let(:title) { 'yolo' }
     let(:params) {{ :target => '/srv/web/yolo', :ensure => 'latest', :dev => true }}
 
-    it { is_expected.to include_class('composer') }
     it { is_expected.to contain_composer__project('yolo').with({ 'ensure' => 'latest'} )}
     it { is_expected.to contain_exec('composer_install_yolo').with({
       'command' => '/usr/local/bin/composer install --no-interaction --quiet --no-progress --dev --prefer-dist',
@@ -61,7 +58,6 @@ describe 'composer::project' do
     let(:title) { 'yolo' }
     let(:params) {{ :target => '/srv/web/yolo', :ensure => 'latest', :dev => true, :lock => true }}
 
-    it { is_expected.to include_class('composer') }
     it { is_expected.to contain_composer__project('yolo').with({ 'ensure' => 'latest'} )}
     it { is_expected.to contain_exec('composer_install_yolo').with({
       'command' => '/usr/local/bin/composer install --no-interaction --quiet --no-progress --dev --prefer-dist',
