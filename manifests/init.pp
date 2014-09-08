@@ -56,11 +56,15 @@ class composer (
 
   validate_re($provider, '^(wget|package)$', 'Please make sure to set $provider one of "wget" or "package".')
 
-  class { "composer::install::${provider}":
+  $install_class = "composer::install::${provider}"
+  class { $install_class:
     target_dir   => $target_dir,
     command_name => $command_name,
     package      => $package,
     user         => $user,
     auto_update  => $auto_update,
   }
+
+  anchor { 'composer::begin': before => Class[$install_class], }
+  anchor { 'composer::end':   require => Class[$install_class], }
 }
