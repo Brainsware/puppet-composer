@@ -1,4 +1,4 @@
-#   Copyright 2013 Brainsware
+#   Copyright 2014 Brainsware
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -14,27 +14,21 @@
 
 # = Class: composer::install::package
 #
-#  This class helps install composer from a package
+#  This "private" class helps install composer from a package
 #
 # == Parameters:
 #
-#  The parameters in this class are exactly the same as the ones of composer
+#  none
 #
-class composer::install::package (
-  $target_dir   = $composer::params::target_dir,
-  $command_name = $composer::params::command_name,
-  $package      = $composer::params::package,
-  $user         = $composer::params::user,
-  $auto_update  = $composer::params::auto_update
-) inherits composer::params {
+class composer::install::package {
 
-  $ensure = $auto_update? {
+  $ensure = $::composer::auto_update? {
     true    => 'latest',
     default => 'present',
   }
 
   package { 'composer-install':
     ensure => $ensure,
-    name   => $package,
+    name   => $::composer::package,
   }
 }

@@ -54,16 +54,13 @@ class composer (
   $auto_update  = $composer::params::auto_update
 ) inherits composer::params {
 
-  validate_re($provider, '^(wget|package)$', 'Please make sure to set $provider one of "wget" or "package".')
-
-  $install_class = "composer::install::${provider}"
-  class { $install_class:
-    target_dir   => $target_dir,
-    command_name => $command_name,
-    package      => $package,
-    user         => $user,
-    auto_update  => $auto_update,
+  if $provider in [ 'wget', 'package' ] {
+    $install_class = "composer::install::${provider}"
+  } else {
+    $install_class = $provider
   }
+
+  include $install_class
 
   anchor { 'composer::begin': before => Class[$install_class], }
   anchor { 'composer::end':   require => Class[$install_class], }

@@ -1,4 +1,4 @@
-#   Copyright 2013 Brainsware
+#   Copyright 2014 Brainsware
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -14,40 +14,34 @@
 
 # = Class: composer::install::wget
 #
-#  This class helps install composer by downloading it directly from their website
+#  This private class helps install composer by downloading it directly from their website
 #
 # == Parameters:
 #
-#  The parameters in this class are exactly the same as the ones of composer
+#  none
 #
-class composer::install::wget (
-  $target_dir   = $composer::params::target_dir,
-  $command_name = $composer::params::command_name,
-  $package      = $composer::params::package,
-  $user         = $composer::params::user,
-  $auto_update  = $composer::params::auto_update
-) inherits composer::params {
+class composer::install::wget {
 
   wget::fetch { 'composer-install':
     source      => $::composer::params::phar_location,
-    destination => "${target_dir}/${command_name}",
-    execuser    => $user,
+    destination => "${::composer::target_dir}/${::composer::command_name}",
+    execuser    => $::composer::user,
   }
 
   exec { 'composer-fix-permissions':
-    command => "chmod a+x ${command_name}",
+    command => "chmod a+x ${::composer::command_name}",
     path    => '/usr/bin:/bin:/usr/sbin:/sbin',
-    cwd     => $target_dir,
-    user    => $user,
-    unless  => "test -x ${target_dir}/${command_name}",
+    cwd     => $::composer::target_dir,
+    user    => $::composer::user,
+    unless  => "test -x ${::composer::target_dir}/${::composer::command_name}",
     require => Wget::Fetch['composer-install'],
   }
 
-  if $auto_update {
+  if $::composer::auto_update {
     exec { 'composer-update':
-      command => "${command_name} self-update",
-      path    => "/usr/bin:/bin:/usr/sbin:/sbin:${target_dir}",
-      user    => $user,
+      command => "${::composer::command_name} self-update",
+      path    => "${::composer::target_dir}:/usr/bin:/bin:/usr/sbin:/sbin",
+      user    => $::composer::user,
       require => Exec['composer-fix-permissions'],
     }
   }
