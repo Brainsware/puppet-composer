@@ -38,6 +38,14 @@ Installing composer from a that installs it in a weird directory:
      }
 ```
 
+Installing composer from a third-party module's class:
+
+```puppet
+     class { 'composer':
+       provider   => 'php::composer',
+     }
+```
+
 Installing a project's dependencies with composer. n.b.: This directory must
 already exist. We recommend tracking it with
 [puppetlabs-vcsrepo](http://forge.puppetlabs.com/puppetlabs/vcsrepo)
