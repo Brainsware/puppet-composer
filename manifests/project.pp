@@ -88,14 +88,14 @@ define composer::project (
   }
 
   exec { "composer_install_${title}":
-    command     => "${composer} install ${base_opts} ${install_opts}",
-    onlyif      => "${composer} install ${install_opts} --dry-run | grep -E -- '- (Install|Updat)ing '",
+    command => "${composer} install ${base_opts} ${install_opts}",
+    onlyif  => "${composer} install ${install_opts} --dry-run | grep -E -- '- (Install|Updat)ing '",
   }
 
   if $ensure == latest {
     exec { "composer_update_${title}":
-      command     => "${composer} update ${base_opts} ${update_opts}",
-      onlyif      => "${composer} update ${update_opts} --dry-run | grep -E -- '- (Install|Updat)ing '",
+      command => "${composer} update ${base_opts} ${update_opts}",
+      onlyif  => "${composer} update ${update_opts} --dry-run | grep -E -- '- (Install|Updat)ing '",
     }
   }
 }
