@@ -13,14 +13,7 @@
 #   limitations under the License.
 
 Puppet::Type.type(:composer_project).provide(:composer) do
-  commands :composer => [
-    '/usr/bin/composer',
-    '/usr/local/bin/composer',
-    '/usr/bin/composer.phar',
-    '/usr/local/bin/composer.phar',
-    'composer',
-    'composer.phar',
-  ]
+  commands :composer => 'composer'
 
   mk_resource_methods
 
