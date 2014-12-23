@@ -21,6 +21,9 @@
 # [*ensure*]
 #   Can be either 'present' or 'latest'. 'installed' is a synonym for 'present'. Default: present
 #
+# [*source*]
+#   Package name to create project from, may optionally contain a version, e.g. 'monolog/monolog:~1.0'. Default: undef
+#
 # [*target*]
 #   Where to install this composer project. Must exist! Defaults to $title
 #
@@ -42,6 +45,7 @@
 
 define composer::project (
   $ensure      = present,
+  $source      = undef,
   $target      = $title,
   $dev         = false,
   $prefer      = 'dist',
@@ -75,9 +79,9 @@ define composer::project (
     true  => '--lock',
   }
 
+  $create_project_opts = join(flatten([$dev_opt, "--prefer-${prefer}"]), ' ')
   $install_opts = join(flatten([$dev_opt, $script_opt, $custom_inst_opt, "--prefer-${prefer}" ]), ' ')
-  $update_opts  = join(flatten([$dev_opt, $script_opt, $custom_inst_opt, "--prefer-${prefer}", $lock_opt ]), ' ')
-
+  $update_opts = join(flatten([$dev_opt, $script_opt, $custom_inst_opt, "--prefer-${prefer}", $lock_opt ]), ' ')
 
   Exec {
     cwd         => $target,
@@ -85,6 +89,15 @@ define composer::project (
     provider    => 'posix',
     environment => 'HOME=/root',
     require     => Class['composer'],
+  }
+
+  if $source {
+    exec { "composer_create_project_${title}":
+      # Simulate a dry run, Composer will stop with an error if e.g. the target directory is not empty
+      command => '/bin/true',
+      onlyif  => "${composer} create-project ${base_opts} ${create_project_opts} ${source} .",
+      before  => Exec["composer_install_${title}"],
+    }
   }
 
   exec { "composer_install_${title}":
