@@ -81,6 +81,16 @@ To keep a project up-to-date we can use the `ensure => latest`
      }
 ```
 
+To create a project based on another package we can use the `$source`
+
+```puppet
+    composer::project { 'typo3-cms':
+      ensure => 'present',
+      source => 'typo3/cms-base-distribution:~6.2',
+      target => '/srv/web/typo3',
+    }
+```
+
 ## Patches and Testing
 
 Contributions are highly welcomed, more so are those which contribute patches
