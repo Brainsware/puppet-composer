@@ -1,6 +1,6 @@
 # Puppet Module for PHP composer
 
-[![Build Status](https://travis-ci.org/Brainsware/puppet-composer.png?branch=master)](https://travis-ci.org/Brainsware/puppet-composer)
+[![Build Status](https://api.travis-ci.org/Brainsware/puppet-composer.png?branch=master)](https://travis-ci.org/Brainsware/puppet-composer)
 
 manage installation of composer as well as the installation and update of
 projects with composer.

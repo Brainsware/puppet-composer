@@ -15,6 +15,10 @@
 require 'spec_helper'
 
 describe 'composer', :type => :class do
+  let(:facts) {{
+    :kernel => 'Linux',
+    :path   => '/bin:/usr/bin',
+  }}
   let(:title) { 'composer' }
 
   it { is_expected.to contain_wget__fetch('composer-install') \

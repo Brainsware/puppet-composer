@@ -1,4 +1,4 @@
-#   Copyright 2014 Brainsware
+#   Copyright 2015 Brainsware
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -15,6 +15,10 @@
 require 'spec_helper'
 
 describe 'composer::project' do
+  let(:facts) {{
+    :kernel => 'Linux',
+    :path   => '/bin:/usr/bin',
+  }}
   let(:title) { 'yolo' }
   let(:params) {{ :target => '/srv/web/yolo' }}
 
