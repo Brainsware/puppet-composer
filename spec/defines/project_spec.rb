@@ -16,8 +16,10 @@ require 'spec_helper'
 
 describe 'composer::project' do
   let(:facts) {{
-    :kernel => 'Linux',
-    :path   => '/bin:/usr/bin',
+    :kernel      => 'Linux',
+    :path        => '/bin:/usr/bin',
+    :http_proxy  => 'http://proxy:1000',
+    :https_proxy => 'http://proxy:1000',
   }}
   let(:title) { 'yolo' }
   let(:params) {{ :target => '/srv/web/yolo' }}
