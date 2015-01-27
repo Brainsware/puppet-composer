@@ -1,4 +1,4 @@
-#   Copyright 2014 Brainsware
+#   Copyright 2015 Brainsware
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -85,7 +85,7 @@ describe 'composer', :type => :class do
     it { is_expected.to contain_exec('composer-update') \
       .with_command('composer self-update') \
       .with_user('root') \
-      .with_path('/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin')
+      .with_path('/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin')
     }
   end
 
