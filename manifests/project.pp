@@ -42,6 +42,9 @@
 # [*lock*]
 #   Toggles whether to update only the hash in composer.lock to avoid "out of date" warnings. Default: false
 #
+# [*user*]
+#   The owner of the project. Default: 'root'
+#
 
 define composer::project (
   $ensure      = present,
@@ -52,6 +55,7 @@ define composer::project (
   $scripts     = true,
   $custom_inst = true,
   $lock        = false,
+  $user        = 'root',
 ) {
   include composer
 
@@ -82,12 +86,17 @@ define composer::project (
   $create_project_opts = join(flatten([$dev_opt, "--prefer-${prefer}"]), ' ')
   $install_opts = join(flatten([$dev_opt, $script_opt, $custom_inst_opt, "--prefer-${prefer}" ]), ' ')
   $update_opts = join(flatten([$dev_opt, $script_opt, $custom_inst_opt, "--prefer-${prefer}", $lock_opt ]), ' ')
+  $user_home = $user ? {
+    'root'  => '/root',
+    default => "/home/${user}",
+  }
 
   Exec {
     cwd         => $target,
     path        => $::path,
     provider    => 'posix',
-    environment => 'HOME=/root',
+    user        => $user,
+    environment => "HOME=${user_home}",
     require     => Class['composer'],
   }
 
