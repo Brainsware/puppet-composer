@@ -31,6 +31,9 @@
 # [*user*]
 #   The owner of the composer executable.
 #
+# [*home*]
+#   The composer home directory. Defaults to undef
+#
 # [*auto_update*]
 #   Whether to run `composer self-update`. In the case of package whether to `ensure => latest`.
 #
@@ -51,6 +54,7 @@ class composer (
   $command_name = $composer::params::command_name,
   $package      = $composer::params::package,
   $user         = $composer::params::user,
+  $home         = undef,
   $auto_update  = $composer::params::auto_update
 ) inherits composer::params {
 

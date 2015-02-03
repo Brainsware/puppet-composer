@@ -96,7 +96,10 @@ define composer::project (
     path        => $::path,
     provider    => 'posix',
     user        => $user,
-    environment => "HOME=${user_home}",
+    environment => [
+      "COMPOSER_HOME=${composer::home}",
+      "HOME=${user_home}",
+    ],
     require     => Class['composer'],
   }
 
