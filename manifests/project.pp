@@ -87,19 +87,27 @@ define composer::project (
   $install_opts = join(flatten([$dev_opt, $script_opt, $custom_inst_opt, "--prefer-${prefer}" ]), ' ')
   $update_opts = join(flatten([$dev_opt, $script_opt, $custom_inst_opt, "--prefer-${prefer}", $lock_opt ]), ' ')
   $user_home = $user ? {
-    'root'  => '/root',
-    default => "/home/${user}",
+    'root'  => ['HOME=/root'],
+    default => ["HOME=/home/${user}"],
   }
+
+  if $composer::home {
+    $composer_home = ["COMPOSER_HOME=${composer::home}"]
+  } else {
+    $composer_home = []
+  }
+
+  $environment = concat(
+    $user_home,
+    $composer_home
+  )
 
   Exec {
     cwd         => $target,
     path        => $::path,
     provider    => 'posix',
     user        => $user,
-    environment => [
-      "COMPOSER_HOME=${composer::home}",
-      "HOME=${user_home}",
-    ],
+    environment => $environment,
     require     => Class['composer'],
   }
 
