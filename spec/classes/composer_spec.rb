@@ -24,7 +24,7 @@ describe 'composer', :type => :class do
   let(:title) { 'composer' }
 
   it { is_expected.to contain_wget__fetch('composer-install') \
-    .with_source('http://getcomposer.org/composer.phar') \
+    .with_source('https://getcomposer.org/composer.phar') \
     .with_execuser('root') \
     .with_destination('/usr/local/bin/composer')
   }
@@ -41,7 +41,7 @@ describe 'composer', :type => :class do
     let(:params) {{ :target_dir => '/usr/bin' }}
 
     it { is_expected.to contain_wget__fetch('composer-install') \
-      .with_source('http://getcomposer.org/composer.phar') \
+      .with_source('https://getcomposer.org/composer.phar') \
       .with_execuser('root') \
       .with_destination('/usr/bin/composer')
     }
@@ -59,7 +59,7 @@ describe 'composer', :type => :class do
     let(:params) {{ :command_name => 'c' }}
 
     it { is_expected.to contain_wget__fetch('composer-install') \
-      .with_source('http://getcomposer.org/composer.phar') \
+      .with_source('https://getcomposer.org/composer.phar') \
       .with_execuser('root') \
       .with_destination('/usr/local/bin/c')
     }
@@ -77,7 +77,7 @@ describe 'composer', :type => :class do
     let(:params) {{ :auto_update => true }}
 
     it { is_expected.to contain_wget__fetch('composer-install') \
-      .with_source('http://getcomposer.org/composer.phar') \
+      .with_source('https://getcomposer.org/composer.phar') \
       .with_execuser('root') \
       .with_destination('/usr/local/bin/composer')
     }
@@ -99,7 +99,7 @@ describe 'composer', :type => :class do
     let(:params) {{ :user => 'will' }}
 
     it { is_expected.to contain_wget__fetch('composer-install') \
-      .with_source('http://getcomposer.org/composer.phar') \
+      .with_source('https://getcomposer.org/composer.phar') \
       .with_execuser('will') \
       .with_destination('/usr/local/bin/composer')
     }

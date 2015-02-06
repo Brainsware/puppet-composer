@@ -1,4 +1,4 @@
-#   Copyright 2014 Brainsware
+#   Copyright 2015 Brainsware
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@
 class composer::install::wget {
 
   wget::fetch { 'composer-install':
-    source      => $::composer::params::phar_location,
+    source      => $::composer::source,
     destination => "${::composer::target_dir}/${::composer::command_name}",
     execuser    => $::composer::user,
   }

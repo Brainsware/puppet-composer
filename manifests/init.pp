@@ -28,6 +28,9 @@
 # [*package*]
 #   The name of the composer package.
 #
+# [*source*]
+#   The (default) source to download composer from.
+#
 # [*user*]
 #   The owner of the composer executable.
 #
@@ -49,15 +52,15 @@
 #   }
 #
 class composer (
-  $provider     = $composer::params::provider,
-  $target_dir   = $composer::params::target_dir,
-  $command_name = $composer::params::command_name,
-  $package      = $composer::params::package,
-  $user         = $composer::params::user,
+  $provider     = 'wget',
+  $target_dir   = '/usr/local/bin',
+  $command_name = 'composer',
+  $package      = 'php-composer',
+  $source       = 'https://getcomposer.org/composer.phar',
+  $user         = 'root',
   $home         = undef,
-  $auto_update  = $composer::params::auto_update
-) inherits composer::params {
-
+  $auto_update  = false,
+) {
   if $provider in [ 'wget', 'package' ] {
     $install_class = "composer::install::${provider}"
   } else {
