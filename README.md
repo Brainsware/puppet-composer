@@ -91,6 +91,28 @@ To create a project based on another package we can use the `$source`
     }
 ```
 
+Ensuring a composer repository is added:
+
+```puppet
+composer::repository { 'repository'
+  ensure => present,
+  type   => 'vcs',
+  url    => 'git@github.com:user/repository.git',
+  target => '/path/to/project,
+}
+```
+
+This modifies the `composer.json` of the project. Composer repositories may also be added globally:
+
+```puppet
+composer::repository { 'global'
+  ensure => present,
+  type   => 'vcs',
+  url    => 'git@github.com:user/repository.git',
+  global => true,
+}
+```
+
 ## Patches and Testing
 
 Contributions are highly welcomed, more so are those which contribute patches
