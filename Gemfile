@@ -3,7 +3,8 @@ source "https://rubygems.org"
 group :test do
   gem "rake"
   gem "puppet", ENV['PUPPET_VERSION'] || '~> 3.7.0'
-  gem "rspec-puppet", :git => 'https://github.com/rodjek/rspec-puppet.git'
+  # Pinning due to bug in newer rspec with Ruby 1.8.7
+  gem 'rspec-core', '3.1.7'
   gem "puppetlabs_spec_helper"
   gem "metadata-json-lint"
 end
