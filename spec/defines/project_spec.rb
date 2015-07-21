@@ -77,6 +77,22 @@ describe 'composer::project' do
             'cwd'     => '/srv/web/yolo'
           })}
         end
+
+        context 'Create project from source' do
+          let(:title) { 'yolo' }
+          let(:params) {{ :target => '/srv/web/yolo', :ensure => 'present', :source => 'foo/bar' }}
+
+          it { is_expected.to contain_composer__project('yolo').with({ 'ensure' => 'present'} )}
+          it { is_expected.to contain_exec('composer_create_project_yolo').with({
+            'command' => '/bin/true',
+            'onlyif'  => '/usr/local/bin/composer create-project --no-interaction --quiet --no-progress --no-dev --prefer-dist --keep-vcs foo/bar .',
+            'cwd'     => '/srv/web/yolo'
+          })}
+          it { is_expected.to contain_exec('composer_install_yolo').with({
+            'command' => '/usr/local/bin/composer install --no-interaction --quiet --no-progress --no-dev --prefer-dist',
+            'cwd'     => '/srv/web/yolo'
+          })}
+        end
       end
     end
   end

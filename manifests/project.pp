@@ -83,7 +83,7 @@ define composer::project (
     true  => '--lock',
   }
 
-  $create_project_opts = join(flatten([$dev_opt, "--prefer-${prefer}"]), ' ')
+  $create_project_opts = join(flatten([$dev_opt, "--prefer-${prefer}", '--keep-vcs']), ' ')
   $install_opts = join(flatten([$dev_opt, $script_opt, $custom_inst_opt, "--prefer-${prefer}" ]), ' ')
   $update_opts = join(flatten([$dev_opt, $script_opt, $custom_inst_opt, "--prefer-${prefer}", $lock_opt ]), ' ')
   $user_home = $user ? {
