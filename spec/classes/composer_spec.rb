@@ -134,7 +134,7 @@ describe 'composer', :type => :class do
         end
 
         context 'with provider package, and auto_update' do
-          let(:params) { { provider => 'package', :auto_update => true } }
+          let(:params) { { provider: 'package', :auto_update => true } }
 
           it { is_expected.not_to contain_archive('composer-install') }
           it do
