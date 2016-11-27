@@ -7,7 +7,7 @@ group :test do
   gem "puppetlabs_spec_helper", '~> 1.2.2'
   gem "metadata-json-lint"
   gem "rspec-puppet-facts"
-  gem "rspec", "< 3.2.0", { "platforms" => ["ruby_18"] }
+  gem "rspec"
 end
 
 group :development do
