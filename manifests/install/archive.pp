@@ -1,4 +1,4 @@
-#   Copyright 2015 Brainsware
+#   Copyright 2016 Brainsware
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -12,7 +12,7 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 
-# = Class: composer::install::wget
+# = Class: composer::install::archive
 #
 #  This private class helps install composer by downloading it directly from their website
 #
@@ -20,21 +20,16 @@
 #
 #  none
 #
-class composer::install::wget {
+class composer::install::archive {
 
-  wget::fetch { 'composer-install':
-    source      => $::composer::source,
-    destination => "${::composer::target_dir}/${::composer::command_name}",
-    execuser    => $::composer::user,
-  }
-
-  exec { 'composer-fix-permissions':
-    command => "chmod a+x ${::composer::command_name}",
-    path    => '/usr/bin:/bin:/usr/sbin:/sbin',
-    cwd     => $::composer::target_dir,
-    user    => $::composer::user,
-    unless  => "test -x ${::composer::target_dir}/${::composer::command_name}",
-    require => Wget::Fetch['composer-install'],
+  archive { 'composer-install':
+    source => $::composer::source,
+    path   => "${::composer::target_dir}/${::composer::command_name}",
+    user   => $::composer::user,
+  } ~>
+  file { 'composer-fix-permissions':
+    path => "${::composer::target_dir}/${::composer::command_name}",
+    mode => '0755',
   }
 
   if $::composer::auto_update {
@@ -42,7 +37,7 @@ class composer::install::wget {
       command => "${::composer::command_name} self-update",
       path    => "${::composer::target_dir}:/usr/bin:/bin:/usr/sbin:/sbin",
       user    => $::composer::user,
-      require => Exec['composer-fix-permissions'],
+      require => File['composer-fix-permissions'],
     }
   }
 }

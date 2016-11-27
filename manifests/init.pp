@@ -1,4 +1,4 @@
-#   Copyright 2014 Brainsware
+#   Copyright 2016 Brainsware
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -52,7 +52,7 @@
 #   }
 #
 class composer (
-  $provider     = 'wget',
+  $provider     = 'archive',
   $target_dir   = '/usr/local/bin',
   $command_name = 'composer',
   $package      = 'php-composer',
@@ -61,14 +61,11 @@ class composer (
   $home         = undef,
   $auto_update  = false,
 ) {
-  if $provider in [ 'wget', 'package' ] {
-    $install_class = "composer::install::${provider}"
-  } else {
-    $install_class = $provider
+
+  $install_class = $provider? {
+    /^(archive|package)$/ => "composer::install::${provider}",
+    default               => $provider,
   }
 
-  include $install_class
-
-  anchor { 'composer::begin': before => Class[$install_class], }
-  anchor { 'composer::end':   require => Class[$install_class], }
+  contain $install_class
 }

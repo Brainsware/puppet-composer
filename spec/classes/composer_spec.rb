@@ -17,7 +17,7 @@ require 'spec_helper'
 describe 'composer', :type => :class do
   context 'supported operating systems' do
     on_supported_os.each do |os, facts|
-      context "on #{os} #{facts}" do
+      context "on #{os}" do
         let(:facts) do
           facts
         end
@@ -25,125 +25,134 @@ describe 'composer', :type => :class do
         context 'it should install composer' do
           let(:title) { 'composer' }
 
-          it { is_expected.to contain_wget__fetch('composer-install') \
-               .with_source('https://getcomposer.org/composer.phar') \
-               .with_execuser('root') \
-               .with_destination('/usr/local/bin/composer')
-          }
+          it do
+            is_expected.to contain_archive('composer-install') \
+              .with_source('https://getcomposer.org/composer.phar') \
+              .with_user('root') \
+              .with_path('/usr/local/bin/composer')
+          end
 
-          it { is_expected.to contain_exec('composer-fix-permissions') \
-               .with_command('chmod a+x composer') \
-               .with_user('root') \
-               .with_cwd('/usr/local/bin')
-          }
+          it do
+            is_expected.to contain_file('composer-fix-permissions') \
+              .with_path('/usr/local/bin/composer') \
+              .with_mode('0755') \
+          end
 
           it { is_expected.not_to contain_exec('composer-update') }
         end
 
         context 'with a given target_dir' do
-          let(:params) {{ :target_dir => '/usr/bin' }}
+          let(:params) { { target_dir: '/usr/bin' } }
 
-          it { is_expected.to contain_wget__fetch('composer-install') \
-               .with_source('https://getcomposer.org/composer.phar') \
-               .with_execuser('root') \
-               .with_destination('/usr/bin/composer')
-          }
+          it do
+            is_expected.to contain_archive('composer-install') \
+              .with_source('https://getcomposer.org/composer.phar') \
+              .with_user('root') \
+              .with_path('/usr/bin/composer')
+          end
 
-          it { is_expected.to contain_exec('composer-fix-permissions') \
-               .with_command('chmod a+x composer') \
-               .with_user('root') \
-               .with_cwd('/usr/bin')
-          }
+          it do
+            is_expected.to contain_file('composer-fix-permissions') \
+              .with_mode('0755') \
+              .with_path('/usr/bin/composer')
+          end
 
           it { is_expected.not_to contain_exec('composer-update') }
         end
 
         context 'with a given command_name' do
-          let(:params) {{ :command_name => 'c' }}
+          let(:params) { { command_name: 'c' } }
 
-          it { is_expected.to contain_wget__fetch('composer-install') \
-               .with_source('https://getcomposer.org/composer.phar') \
-               .with_execuser('root') \
-               .with_destination('/usr/local/bin/c')
-          }
+          it do
+            is_expected.to contain_archive('composer-install') \
+              .with_source('https://getcomposer.org/composer.phar') \
+              .with_user('root') \
+              .with_path('/usr/local/bin/c')
+          end
 
-          it { is_expected.to contain_exec('composer-fix-permissions') \
-               .with_command('chmod a+x c') \
-               .with_user('root') \
-               .with_cwd('/usr/local/bin')
-          }
+          it do
+            is_expected.to contain_file('composer-fix-permissions') \
+              .with_mode('0755') \
+              .with_path('/usr/local/bin/c')
+          end
 
           it { is_expected.not_to contain_exec('composer-update') }
         end
 
         context 'with auto_update => true' do
-          let(:params) {{ :auto_update => true }}
+          let(:params) { { auto_update: true } }
 
-          it { is_expected.to contain_wget__fetch('composer-install') \
-               .with_source('https://getcomposer.org/composer.phar') \
-               .with_execuser('root') \
-               .with_destination('/usr/local/bin/composer')
-          }
+          it do
+            is_expected.to contain_archive('composer-install') \
+              .with_source('https://getcomposer.org/composer.phar') \
+              .with_user('root') \
+              .with_path('/usr/local/bin/composer')
+          end
 
-          it { is_expected.to contain_exec('composer-fix-permissions') \
-               .with_command('chmod a+x composer') \
-               .with_user('root') \
-               .with_cwd('/usr/local/bin')
-          }
+          it do
+            is_expected.to contain_file('composer-fix-permissions') \
+              .with_mode('0755') \
+              .with_path('/usr/local/bin/composer')
+          end
 
-          it { is_expected.to contain_exec('composer-update') \
-               .with_command('composer self-update') \
-               .with_user('root') \
-               .with_path('/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin')
-          }
+          it do
+            is_expected.to contain_exec('composer-update') \
+              .with_command('composer self-update') \
+              .with_user('root') \
+              .with_path('/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin')
+          end
         end
 
         context 'with a given user' do
-          let(:params) {{ :user => 'will' }}
+          let(:params) { { user: 'will' } }
 
-          it { is_expected.to contain_wget__fetch('composer-install') \
-               .with_source('https://getcomposer.org/composer.phar') \
-               .with_execuser('will') \
-               .with_destination('/usr/local/bin/composer')
-          }
+          it do
+            is_expected.to contain_archive('composer-install') \
+              .with_source('https://getcomposer.org/composer.phar') \
+              .with_user('will') \
+              .with_path('/usr/local/bin/composer')
+          end
 
-          it { is_expected.to contain_exec('composer-fix-permissions') \
-               .with_command('chmod a+x composer') \
-               .with_user('will') \
-               .with_cwd('/usr/local/bin')
-          }
+          it do
+            is_expected.to contain_file('composer-fix-permissions') \
+              .with_mode('0755') \
+              .with_path('/usr/local/bin/composer')
+          end
 
           it { is_expected.not_to contain_exec('composer-update') }
         end
 
         context 'with provider set to package' do
-          let(:params) {{ :provider => 'package' }}
+          let(:params) { { provider: 'package' } }
 
-          it { is_expected.not_to contain_wget__fetch('composer-install') }
-          it { is_expected.to contain_package('composer-install') \
-               .with_name('php-composer') \
-               .with_ensure('present')
-          }
+          it { is_expected.not_to contain_archive('composer-install') }
+          it do
+            is_expected.to contain_package('composer-install') \
+              .with_name('php-composer') \
+              .with_ensure('present')
+          end
         end
 
         context 'with provider package, and auto_update' do
-          let(:params) {{ :provider => 'package', :auto_update => true }}
+          let(:params) { { provider => 'package', :auto_update => true } }
 
-          it { is_expected.not_to contain_wget__fetch('composer-install') }
-          it { is_expected.to contain_package('composer-install') \
-               .with_name('php-composer') \
-               .with_ensure('latest')
-          }
+          it { is_expected.not_to contain_archive('composer-install') }
+          it do
+            is_expected.to contain_package('composer-install') \
+              .with_name('php-composer') \
+              .with_ensure('latest')
+          end
         end
 
         context 'with provider package, and custom package name' do
-          let(:params) {{ :provider => 'package', :package => 'php5-composer' }}
+          let(:params) { { provider: 'package', package: 'php5-composer' } }
 
-          it { is_expected.not_to contain_wget__fetch('composer-install') }
-          it { is_expected.to contain_package('composer-install') \
-               .with_name('php5-composer') \
-               .with_ensure('present')
-          }
+          it { is_expected.not_to contain_archive('composer-install') }
+          it do
+            is_expected.to contain_package('composer-install') \
+              .with_name('php5-composer') \
+              .with_ensure('present')
+          end
         end
       end
     end

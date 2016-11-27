@@ -12,7 +12,7 @@ end
 RSpec.configure do |c|
   c.default_facts = {
     :os_maj_version => '6',
-    :puppetversion  => '3.7.4',
+    :puppetversion  => '4.7.4',
     :kernel         => 'Linux',
     :path           => '/bin:/usr/bin',
     :http_proxy     => 'http://proxy:1000',
