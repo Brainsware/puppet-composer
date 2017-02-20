@@ -84,8 +84,8 @@ describe 'composer::project' do
 
           it { is_expected.to contain_composer__project('yolo').with({ 'ensure' => 'present'} )}
           it { is_expected.to contain_exec('composer_create_project_yolo').with({
-            'command' => '/bin/true',
-            'onlyif'  => '/usr/local/bin/composer create-project --no-interaction --quiet --no-progress --no-dev --prefer-dist --keep-vcs foo/bar .',
+            'command' => '/usr/local/bin/composer create-project --no-interaction --quiet --no-progress --no-dev --prefer-dist --keep-vcs foo/bar .',
+            'creates' => '/srv/web/yolo/composer.json',
             'cwd'     => '/srv/web/yolo'
           })}
           it { is_expected.to contain_exec('composer_install_yolo').with({
