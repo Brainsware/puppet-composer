@@ -1,4 +1,4 @@
-#   Copyright 2016 Brainsware
+#   Copyright 2017 Brainsware
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -24,74 +24,74 @@ describe 'composer::project' do
 
         context 'it should create a project' do
           let(:title) { 'yolo' }
-          let(:params) {{ :target => '/srv/web/yolo' }}
+          let(:params) { { target: '/srv/web/yolo' } }
 
-          it { is_expected.to contain_composer__project('yolo').with({ 'ensure' => 'present'} )}
-          it { is_expected.to contain_exec('composer_install_yolo').with({
-            'command' => '/usr/local/bin/composer install --no-interaction --quiet --no-progress --no-dev --prefer-dist',
-            'cwd'     => '/srv/web/yolo'
-          })}
+          it { is_expected.to contain_composer__project('yolo').with('ensure' => 'present') }
+          it do
+            is_expected.to contain_exec('composer_install_yolo').with('command' => '/usr/local/bin/composer install --no-interaction --quiet --no-progress --no-dev --prefer-dist',
+                                                                      'cwd' => '/srv/web/yolo')
+          end
         end
 
         context 'composer project with ensure => latest' do
           let(:title) { 'yolo' }
-          let(:params) {{ :target => '/srv/web/yolo', :ensure => 'latest' }}
+          let(:params) { { target: '/srv/web/yolo', ensure: 'latest' } }
 
-          it { is_expected.to contain_composer__project('yolo').with({ 'ensure' => 'latest'} )}
-          it { is_expected.to contain_exec('composer_install_yolo').with({
-            'command' => '/usr/local/bin/composer install --no-interaction --quiet --no-progress --no-dev --prefer-dist',
-            'cwd'     => '/srv/web/yolo'
-          })}
-          it { is_expected.to contain_exec('composer_update_yolo').with({
-            'command' => '/usr/local/bin/composer update --no-interaction --quiet --no-progress --no-dev --prefer-dist',
-            'cwd'     => '/srv/web/yolo'
-          })}
+          it { is_expected.to contain_composer__project('yolo').with('ensure' => 'latest') }
+          it do
+            is_expected.to contain_exec('composer_install_yolo').with('command' => '/usr/local/bin/composer install --no-interaction --quiet --no-progress --no-dev --prefer-dist',
+                                                                      'cwd' => '/srv/web/yolo')
+          end
+          it do
+            is_expected.to contain_exec('composer_update_yolo').with('command' => '/usr/local/bin/composer update --no-interaction --quiet --no-progress --no-dev --prefer-dist',
+                                                                     'cwd' => '/srv/web/yolo')
+          end
         end
 
         context 'Keep composer project up-to-date with dev dependencies' do
           let(:title) { 'yolo' }
-          let(:params) {{ :target => '/srv/web/yolo', :ensure => 'latest', :dev => true }}
+          let(:params) { { target: '/srv/web/yolo', ensure: 'latest', dev: true } }
 
-          it { is_expected.to contain_composer__project('yolo').with({ 'ensure' => 'latest'} )}
-          it { is_expected.to contain_exec('composer_install_yolo').with({
-            'command' => '/usr/local/bin/composer install --no-interaction --quiet --no-progress --dev --prefer-dist',
-            'cwd'     => '/srv/web/yolo'
-          })}
-          it { is_expected.to contain_exec('composer_update_yolo').with({
-            'command' => '/usr/local/bin/composer update --no-interaction --quiet --no-progress --dev --prefer-dist',
-            'cwd'     => '/srv/web/yolo'
-          })}
+          it { is_expected.to contain_composer__project('yolo').with('ensure' => 'latest') }
+          it do
+            is_expected.to contain_exec('composer_install_yolo').with('command' => '/usr/local/bin/composer install --no-interaction --quiet --no-progress --dev --prefer-dist',
+                                                                      'cwd' => '/srv/web/yolo')
+          end
+          it do
+            is_expected.to contain_exec('composer_update_yolo').with('command' => '/usr/local/bin/composer update --no-interaction --quiet --no-progress --dev --prefer-dist',
+                                                                     'cwd' => '/srv/web/yolo')
+          end
         end
 
         context 'Keep composer project up-to-date with dev dependencies, ignoring composer.lock' do
           let(:title) { 'yolo' }
-          let(:params) {{ :target => '/srv/web/yolo', :ensure => 'latest', :dev => true, :lock => true }}
+          let(:params) { { target: '/srv/web/yolo', ensure: 'latest', dev: true, lock: true } }
 
-          it { is_expected.to contain_composer__project('yolo').with({ 'ensure' => 'latest'} )}
-          it { is_expected.to contain_exec('composer_install_yolo').with({
-            'command' => '/usr/local/bin/composer install --no-interaction --quiet --no-progress --dev --prefer-dist',
-            'cwd'     => '/srv/web/yolo'
-          })}
-          it { is_expected.to contain_exec('composer_update_yolo').with({
-            'command' => '/usr/local/bin/composer update --no-interaction --quiet --no-progress --dev --prefer-dist --lock',
-            'cwd'     => '/srv/web/yolo'
-          })}
+          it { is_expected.to contain_composer__project('yolo').with('ensure' => 'latest') }
+          it do
+            is_expected.to contain_exec('composer_install_yolo').with('command' => '/usr/local/bin/composer install --no-interaction --quiet --no-progress --dev --prefer-dist',
+                                                                      'cwd' => '/srv/web/yolo')
+          end
+          it do
+            is_expected.to contain_exec('composer_update_yolo').with('command' => '/usr/local/bin/composer update --no-interaction --quiet --no-progress --dev --prefer-dist --lock',
+                                                                     'cwd' => '/srv/web/yolo')
+          end
         end
 
         context 'Create project from source' do
           let(:title) { 'yolo' }
-          let(:params) {{ :target => '/srv/web/yolo', :ensure => 'present', :source => 'foo/bar' }}
+          let(:params) { { target: '/srv/web/yolo', ensure: 'present', source: 'foo/bar' } }
 
-          it { is_expected.to contain_composer__project('yolo').with({ 'ensure' => 'present'} )}
-          it { is_expected.to contain_exec('composer_create_project_yolo').with({
-            'command' => '/usr/local/bin/composer create-project --no-interaction --quiet --no-progress --no-dev --prefer-dist --keep-vcs foo/bar .',
-            'creates' => '/srv/web/yolo/composer.json',
-            'cwd'     => '/srv/web/yolo'
-          })}
-          it { is_expected.to contain_exec('composer_install_yolo').with({
-            'command' => '/usr/local/bin/composer install --no-interaction --quiet --no-progress --no-dev --prefer-dist',
-            'cwd'     => '/srv/web/yolo'
-          })}
+          it { is_expected.to contain_composer__project('yolo').with('ensure' => 'present') }
+          it do
+            is_expected.to contain_exec('composer_create_project_yolo').with('command' => '/usr/local/bin/composer create-project --no-interaction --quiet --no-progress --no-dev --prefer-dist --keep-vcs foo/bar .',
+                                                                             'creates' => '/srv/web/yolo/composer.json',
+                                                                             'cwd'     => '/srv/web/yolo')
+          end
+          it do
+            is_expected.to contain_exec('composer_install_yolo').with('command' => '/usr/local/bin/composer install --no-interaction --quiet --no-progress --no-dev --prefer-dist',
+                                                                      'cwd' => '/srv/web/yolo')
+          end
         end
       end
     end
