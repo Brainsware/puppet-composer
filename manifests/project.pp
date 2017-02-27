@@ -113,9 +113,8 @@ define composer::project (
 
   if $source {
     exec { "composer_create_project_${title}":
-      # Simulate a dry run, Composer will stop with an error if e.g. the target directory is not empty
-      command => '/bin/true',
-      onlyif  => "${composer} create-project ${base_opts} ${create_project_opts} ${source} .",
+      command => "${composer} create-project ${base_opts} ${create_project_opts} ${source} .",
+      creates => "${target}/composer.json",
       before  => Exec["composer_install_${title}"],
     }
   }
