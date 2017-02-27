@@ -55,3 +55,9 @@ deploy:
   user: Brainsware
   password:
     secure: "Gf7Gd8iLmwWgpVm4SM/MmsrB5mqfUdK9/G03E0xcrebGAAm2UPd3xDMGPcVkrlT52+PLVFXqZAFLQQwebQN0Q2HSF/AP2aOGqCItE2wZEXuUIoqobDuL0xGAaZsnfklc3KsNFkZdCOmTHfwx0MwGcnTlMTt01ro+Jd14Glf5YY8="
+  on:
+    tags: true
+    # all_branches is required to use tags
+    all_branches: true
+    # Only publish the build marked with "DEPLOY_TO_FORGE"
+    condition: "$DEPLOY_TO_FORGE = yes"
