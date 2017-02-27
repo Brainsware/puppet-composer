@@ -4,8 +4,8 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not impact the functionality of the module.
 
-## Release [0.3.1](https://github.com/brainsware/puppet-composer/tree/0.3.1) (2017-02-27)
-[Full Changelog](https://github.com/brainsware/puppet-composer/compare/v0.3.0...0.3.1)
+## Release [0.3.2](https://github.com/brainsware/puppet-composer/tree/0.3.2) (2017-02-27)
+[Full Changelog](https://github.com/brainsware/puppet-composer/compare/v0.3.0...0.3.2)
 
 **Closed issues:**
 
@@ -13,6 +13,7 @@ These should not impact the functionality of the module.
 
 **Merged pull requests:**
 
+- prepare release for 0.3.1 [\#27](https://github.com/Brainsware/puppet-composer/pull/27) ([igalic](https://github.com/igalic)) (this has largely failed to automate)
 - Output errors of "composer create-project" command [\#26](https://github.com/Brainsware/puppet-composer/pull/26) ([mbrodala](https://github.com/mbrodala))
 
 ## [v0.3.0](https://github.com/brainsware/puppet-composer/tree/v0.3.0) (2016-11-27)
