@@ -1,6 +1,6 @@
 {
   "name": "brainsware-composer",
-  "version": "0.3.1",
+  "version": "0.3.2-rc0",
   "author": "Brainsware",
   "summary": "manage PHP composer installation as well as installation and update of projects using composer",
   "license": "Apache-2.0",
