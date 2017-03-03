@@ -1,7 +1,7 @@
 {
-  "name": "Brainsware-composer",
-  "version": "0.3.5-rc0",
-  "author": "Brainsware",
+  "name": "brainsware-composer",
+  "version": "0.3.5",
+  "author": "brainsware",
   "summary": "manage PHP composer installation as well as installation and update of projects using composer",
   "license": "Apache-2.0",
   "source": "https://github.com/Brainsware/puppet-composer",

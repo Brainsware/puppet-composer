@@ -52,7 +52,7 @@ notifications:
   email: false
 deploy:
   provider: puppetforge
-  user: Brainsware
+  user: brainsware
   password:
     secure: "Gf7Gd8iLmwWgpVm4SM/MmsrB5mqfUdK9/G03E0xcrebGAAm2UPd3xDMGPcVkrlT52+PLVFXqZAFLQQwebQN0Q2HSF/AP2aOGqCItE2wZEXuUIoqobDuL0xGAaZsnfklc3KsNFkZdCOmTHfwx0MwGcnTlMTt01ro+Jd14Glf5YY8="
   on:

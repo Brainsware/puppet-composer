@@ -4,8 +4,8 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not impact the functionality of the module.
 
-## Release [0.3.4](https://github.com/brainsware/puppet-composer/tree/0.3.4) (2017-03-03)
-[Full Changelog](https://github.com/brainsware/puppet-composer/compare/v0.3.0...0.3.4)
+## Release [0.3.5](https://github.com/brainsware/puppet-composer/tree/0.3.4) (2017-03-03)
+[Full Changelog](https://github.com/brainsware/puppet-composer/compare/v0.3.0...0.3.5)
 
 **Closed issues:**
 
