@@ -91,6 +91,18 @@ To create a project based on another package we can use the `$source`
     }
 ```
 
+If you have multiple versions of PHP installed, you can specify which one composer should be called with by including the path to the binary.
+
+```puppet
+     # install yolo project with a different PHP version:
+     composer::project { 'yolo':
+       ensure  => 'installed',
+       target  => '/srv/web/yolo',
+       php_bin => '/usr/local/bin/php80',
+       require => Vcsrepo['/srv/web/yolo'],
+     }
+```
+
 Ensuring a composer repository is added:
 
 ```puppet
