@@ -93,6 +93,17 @@ describe 'composer::project' do
                                                                       'cwd' => '/srv/web/yolo')
           end
         end
+
+        context 'it should create a project with a specific php version' do
+          let(:title) { 'yolo' }
+          let(:params) { { target: '/srv/web/yolo', php_bin: '/usr/local/bin/php' } }
+
+          it { is_expected.to contain_composer__project('yolo').with('ensure' => 'present') }
+          it do
+            is_expected.to contain_exec('composer_install_yolo').with('command' => '/usr/local/bin/php /usr/local/bin/composer install --no-interaction --quiet --no-progress --no-dev --prefer-dist',
+                                                                      'cwd' => '/srv/web/yolo')
+          end
+        end
       end
     end
   end

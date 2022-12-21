@@ -45,6 +45,9 @@
 # [*user*]
 #   The owner of the project. Default: 'root'
 #
+# [*php_bin*]
+#   Specify a PHP binary to run composer with. Defaults to system default.
+#
 
 define composer::project (
   $ensure      = present,
@@ -56,6 +59,7 @@ define composer::project (
   $custom_inst = true,
   $lock        = false,
   $user        = 'root',
+  $php_bin     = '',
 ) {
   include composer
 
@@ -63,7 +67,7 @@ define composer::project (
   validate_re($prefer, '^(dist|source)$', '$prefer can only be one of source or dist. See `composer install --help`.')
   validate_bool($dev, $scripts, $custom_inst)
 
-  $composer  = "${composer::target_dir}/${composer::command_name}"
+  $composer  = strip("${php_bin} ${composer::target_dir}/${composer::command_name}")
   $base_opts = '--no-interaction --quiet --no-progress'
 
   $dev_opt = $dev? {
